@@ -47,20 +47,32 @@ public class Main {
                 break;
                 case "B": cars = App.sortByMake();
                 break;
-                case "C":
+                case "C": cars = App.sortByPriceLH();
                 break;
-                case "D":
+                case "D": cars = App.sortByPriceHL();
                 break;
-                case "E":
+                case "E": cars = App.sortByEngine();
                 break;
                 default:
                     System.out.println("Invalid leter! Please try again.");
                     answerIsValid= true;
             }
+
+            for (Car car : cars) {
+                System.out.println(car);
+            }
+
+            System.out.println(" ");
+            System.out.println("Do you want to look at other options?");
+
+            String answer1 = key.nextLine();
+
+            if (answer1.equalsIgnoreCase("yes")){
+                answerIsValid=true;
+            } else {
+                App.rentCar();
+            }
         }
 
-        for (Car car : cars) {
-            System.out.println(car);
-        }
     }
 }

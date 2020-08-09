@@ -112,12 +112,104 @@ public class App {
                 wantToFind=true;
             }
 
-            System.out.println("Do you want to search another make?");
-            String answer = key.nextLine();
-            if(answer.equalsIgnoreCase("yes")){
-                wantToFind = true;
-            }
         }
         return cars1;
+    }
+
+    public static List<Car> sortByPriceLH() {
+        List<Car> cars = DataBase.getCarList();
+        for (int i = 0; i < cars.size() - 1; i++) {
+            for (int j = 0; j < cars.size() - i - 1; j++) {
+                Car carTest1 = cars.get(j);
+                Car carTest2 = cars.get(j + 1);
+                if (carTest1.getPrice() > carTest2.getPrice()) {
+                    int a = carTest1.getPrice();
+                    carTest1.setPrice(carTest2.getPrice());
+                    carTest2.setPrice(a);
+                }
+            }
+        }
+
+        return cars;
+    }
+
+    public static List<Car> sortByPriceHL() {
+        List<Car> cars = DataBase.getCarList();
+        for (int i = 0; i < cars.size() - 1; i++) {
+            for (int j = 0; j < cars.size() - i - 1; j++) {
+                Car carTest1 = cars.get(j);
+                Car carTest2 = cars.get(j + 1);
+                if (carTest1.getPrice() < carTest2.getPrice()) {
+                    int a = carTest1.getPrice();
+                    carTest1.setPrice(carTest2.getPrice());
+                    carTest2.setPrice(a);
+                }
+            }
+        }
+
+        return cars;
+    }
+
+    public static List<Car> sortByEngine(){
+        List<Car> cars = DataBase.getCarList();
+        List<Car> cars1 = new ArrayList<>();
+        Scanner key = new Scanner(System.in);
+        boolean wantToFind = true;
+
+        while(wantToFind){
+            System.out.println("What engine type are you trying to find?");
+            wantToFind = false;
+            double engine = key.nextDouble();
+            int nrOfCars = 0;
+            for (Car car : cars) {
+                if (engine == car.getEngine()) {
+                    cars1.add(car);
+                    ++nrOfCars;
+                }
+            }
+
+            if (nrOfCars==0){
+                System.out.println("Engine not found! Try searching for a new one.");
+                wantToFind=true;
+            }
+
+        }
+        return cars1;
+    }
+
+    public static void rentCar(){
+        List<Car> cars = DataBase.getCarList();
+        Scanner key = new Scanner(System.in);
+
+        int nrOfCars = 0;
+        boolean a = true;
+
+        while(a){
+            a = false;
+
+            System.out.println("What's the make of the car you want to rent?");
+            String make = key.nextLine();
+            System.out.println("What's the year of the car you want to rent?");
+            int year = key.nextInt();
+            System.out.println("What's the engine of the car you want to rent?");
+            double engine = key.nextDouble();
+
+            for (Car car : cars) {
+                if (make.equalsIgnoreCase(car.getMake()) && year == car.getYear() && engine == car.getEngine()) {
+                    nrOfCars = 1;
+                    System.out.println("This is the car you want to rent.");
+                    System.out.println(car);
+                    System.out.println("Your total is " + car.getPrice() + " $.");
+                    System.out.println("You'll soon receive an email from us for more information about the rental process.");
+                    System.out.println("Thank you for using car rental!");
+                    break;
+                }
+            }
+
+            if (nrOfCars==0){
+                System.out.println("Car not found! Please try a new one.");
+                a = true;
+            }
+        }
     }
 }
